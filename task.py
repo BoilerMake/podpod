@@ -14,6 +14,7 @@ ID = config.get('config', 'POD_ID')
 
 parser = argparse.ArgumentParser(description='PodPod Communication software for BoilerMake Backend')
 parser.add_argument('--stdin', help='Use stdin instead of /dev/hidraw0', action="store_true")
+parser.add_argument('--no-gpio', help='Does not use GPIO if specified', action="store_true")
 parser.add_argument('--no-heartbeat', help='Disables heartbeat connection with server', action="store_true")
 args = parser.parse_args()
 
