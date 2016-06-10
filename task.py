@@ -1,15 +1,15 @@
 import sys
-from ConfigParser import SafeConfigParser
+import configparser
 import requests
 import threading
 from time import sleep
 
-parser = SafeConfigParser()
-parser.read('config.ini')
+config = configparser.ConfigParser()
+config.read('config.ini')
 
-API = parser.get('config', 'BASE_API')
-KEY = parser.get('config', 'PODPOD_KEY')
-ID = parser.get('config', 'POD_ID')
+API = config.get('config', 'BASE_API')
+KEY = config.get('config', 'PODPOD_KEY')
+ID = config.get('config', 'POD_ID')
 
 
 hid = { 4: 'a', 5: 'b', 6: 'c', 7: 'd', 8: 'e', 9: 'f', 10: 'g', 11: 'h', 12: 'i', 13: 'j', 14: 'k', 15: 'l', 16: 'm', 17: 'n', 18: 'o', 19: 'p', 20: 'q', 21: 'r', 22: 's', 23: 't', 24: 'u', 25: 'v', 26: 'w', 27: 'x', 28: 'y', 29: 'z', 30: '1', 31: '2', 32: '3', 33: '4', 34: '5', 35: '6', 36: '7', 37: '8', 38: '9', 39: '0', 44: ' ', 45: '-', 46: '=', 47: '[', 48: ']', 49: '\\', 51: ';' , 52: '\'', 53: '~', 54: ',', 55: '.', 56: '/'  }
@@ -21,7 +21,7 @@ fp = open('/dev/hidraw0', 'rb')
 #TODO: Allow this thread to stop execution on API response
 def MyThread1():
     while True:
-      print "heartbeat"
+      print("heartbeat")
       payload = {'pod_key': KEY, 'pod_id': ID}
       r = requests.post(API + '/pods/heartbeat', data=payload)
       sleep(120)
@@ -35,7 +35,7 @@ ss = ""
 shift = False
 
 done = False
-print "\nScanning for barcodes..."
+print("\nScanning for barcodes...")
 while True:
   while not done:
   
@@ -78,6 +78,6 @@ while True:
   payload = {'pod_key': KEY, 'pod_id': ID, 'code': ss}
   r = requests.post(API + '/pods/scan', data=payload)
   print(r.text)
-  print ss
+  print(ss)
   ss = ""
   done = False
