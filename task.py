@@ -36,7 +36,7 @@ if not args.no_heartbeat:
   t1.setDaemon(True)
   t1.start()
 
-print("\nScanning for barcodes...")
+print("Scanning for barcodes", end=" ")
 if args.stdin:
    print("using stdin")
    for line in sys.stdin:
@@ -47,9 +47,10 @@ else:
    print("using /dev/hidraw0")
    ss = ""
    shift = False
-   
    done = False
+
    fp = open('/dev/hidraw0', 'rb')
+
    while True:
      while not done:
         print 
@@ -57,7 +58,6 @@ else:
         buffer = fp.read(8)
         for c in buffer:
            if c > 0:
-     
               ##  40 is carriage return which signifies
               ##  we are done looking for characters
               if c == 40:
@@ -67,28 +67,25 @@ else:
               ##  If we are shifted then we have to 
               ##  use the hid2 characters.
               if shift: 
-     
                  ## If it is a '2' then it is the shift key
                  if c == 2 :
                     shift = True
      
                  ## if not a 2 then lookup the mapping
                  else:
-                    ss += hid2[ c ]
+                    ss += hid2[c]
                     shift = False
      
               ##  If we are not shifted then use
               ##  the hid characters
-     
               else:
-     
                  ## If it is a '2' then it is the shift key
                  if c == 2 :
                     shift = True
-     
                  ## if not a 2 then lookup the mapping
                  else:
-                    ss += hid[ c ]
+                    ss += hid[c]
+
      payload = {'pod_key': KEY, 'pod_id': ID, 'code': ss}
      r = requests.post(API + '/pods/scan', data=payload)
      print(r.text)
