@@ -36,16 +36,19 @@ if not args.no_heartbeat:
   t1.setDaemon(True)
   t1.start()
 
-ss = ""
-shift = False
-
-done = False
 print("\nScanning for barcodes...")
 if args.stdin:
    print("using stdin")
    for line in sys.stdin:
-     print(line)
+     payload = {'pod_key': KEY, 'pod_id': ID, 'code': line.rstrip('\n')}
+     r = requests.post(API + '/pods/scan', data=payload)
+     print(r.text)
 else:
+   print("using /dev/hidraw0")
+   ss = ""
+   shift = False
+   
+   done = False
    fp = open('/dev/hidraw0', 'rb')
    while True:
      while not done:
