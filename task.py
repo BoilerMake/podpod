@@ -52,15 +52,15 @@ else:
    fp = open('/dev/hidraw0', 'rb')
    while True:
      while not done:
-     
+        print 
         ## Get the character from the HID
         buffer = fp.read(8)
         for c in buffer:
-           if ord(c) > 0:
+           if c > 0:
      
               ##  40 is carriage return which signifies
               ##  we are done looking for characters
-              if int(ord(c)) == 40:
+              if c == 40:
                  done = True
                  break;
      
@@ -69,12 +69,12 @@ else:
               if shift: 
      
                  ## If it is a '2' then it is the shift key
-                 if int(ord(c)) == 2 :
+                 if c == 2 :
                     shift = True
      
                  ## if not a 2 then lookup the mapping
                  else:
-                    ss += hid2[ int(ord(c)) ]
+                    ss += hid2[ c ]
                     shift = False
      
               ##  If we are not shifted then use
@@ -83,12 +83,12 @@ else:
               else:
      
                  ## If it is a '2' then it is the shift key
-                 if int(ord(c)) == 2 :
+                 if c == 2 :
                     shift = True
      
                  ## if not a 2 then lookup the mapping
                  else:
-                    ss += hid[ int(ord(c)) ]
+                    ss += hid[ c ]
      payload = {'pod_key': KEY, 'pod_id': ID, 'code': ss}
      r = requests.post(API + '/pods/scan', data=payload)
      print(r.text)
