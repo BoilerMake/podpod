@@ -6,7 +6,7 @@ This script is used to communicate with the BoilerMake Backend, and allows for I
 ### Prerequisites and Installation
 * You must have the [BoilerMake Backend](https://github.com/BoilerMake/backend) installed
     * Setup the backend and generate a `PODPOD_KEY`
-* [Install Python](https://www.python.org/)
+* [Install Python 3](https://www.python.org/)
 * [Install Requests](http://docs.python-requests.org/en/master/)
 * Copy `config.sample.ini` to `config.ini` and fill in your details. Make sure that your API url does **not** have a trailing slash
 
