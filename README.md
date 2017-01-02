@@ -11,3 +11,7 @@ This script is used to communicate with the BoilerMake Backend, and allows for I
 * Copy `config.sample.ini` to `config.ini` and fill in your details. Make sure that your API url does **not** have a trailing slash
 
 Make sure that your Raspberry Pi is connected to the internet, and has a USB Barcode Scanner plugged in. Then, execute `sudo python task.py`
+
+If you want to run this on a desktop or laptop, run the script with the `--stdin` option.
+
+Use `--help` to view all options.
