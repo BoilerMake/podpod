@@ -104,5 +104,6 @@ else:
                     ss += hid[c]
 
      sendCode(ss)
+     ss = ""
      done = False
 file.close()
