@@ -5,6 +5,7 @@ import threading
 import argparse
 import json
 import os
+import socket
 from time import sleep
 
 config = configparser.ConfigParser() 
@@ -35,6 +36,11 @@ hid = { 4: 'a', 5: 'b', 6: 'c', 7: 'd', 8: 'e', 9: 'f', 10: 'g', 11: 'h', 12: 'i
 
 hid2 = { 4: 'A', 5: 'B', 6: 'C', 7: 'D', 8: 'E', 9: 'F', 10: 'G', 11: 'H', 12: 'I', 13: 'J', 14: 'K', 15: 'L', 16: 'M', 17: 'N', 18: 'O', 19: 'P', 20: 'Q', 21: 'R', 22: 'S', 23: 'T', 24: 'U', 25: 'V', 26: 'W', 27: 'X', 28: 'Y', 29: 'Z', 30: '!', 31: '@', 32: '#', 33: '$', 34: '%', 35: '^', 36: '&', 37: '*', 38: '(', 39: ')', 44: ' ', 45: '_', 46: '+', 47: '{', 48: '}', 49: '|', 51: ':' , 52: '"', 53: '~', 54: '<', 55: '>', 56: '?'  }
 
+def get_ip_address():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    s.connect(("8.8.8.8", 80))
+    return s.getsockname()[0]
+
 def sendCode(code):
   payload = {'pod_key': KEY, 'pod_id': ID, 'code': code}
   r = requests.post(API + '/pods/scan', data=payload)
@@ -45,9 +51,10 @@ def sendCode(code):
 
 #TODO: Allow this thread to stop execution on API response
 if not args.no_heartbeat:
+  ip_addr = get_ip_address();
   def heartbeatThread():
       while True:
-        payload = {'pod_key': KEY, 'pod_id': ID}
+        payload = {'pod_key': KEY, 'pod_id': ID, 'ip_addr' : ip_addr}
         r = requests.post(API + '/pods/heartbeat', data=payload)
         print(r.text)
         sleep(120)
