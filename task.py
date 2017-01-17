@@ -4,10 +4,13 @@ import requests
 import threading
 import argparse
 import json
+import os
 from time import sleep
 
-config = configparser.ConfigParser()
-config.read('config.ini')
+config = configparser.ConfigParser() 
+scriptDirectory = os.path.dirname(os.path.realpath(__file__))
+settingsFilePath = os.path.join(scriptDirectory, "config.ini")
+config.readfp(open(settingsFilePath,"r"))
 
 API = config.get('config', 'BASE_API')
 KEY = config.get('config', 'PODPOD_KEY')
