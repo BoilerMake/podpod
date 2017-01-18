@@ -6,6 +6,7 @@ import argparse
 import json
 import os
 import socket
+import time
 from time import sleep
 
 config = configparser.ConfigParser() 
@@ -43,7 +44,7 @@ def get_ip_address():
     return s.getsockname()[0]
 
 def sendCode(code):
-  payload = {'pod_key': KEY, 'pod_id': ID, 'code': code}
+  payload = {'pod_key': KEY, 'pod_id': ID, 'code': code, 'time': int(time.time())}
   r = requests.post(API + '/pods/scan', data=payload)
   file.write(str(payload) + "\n")
   file.write(r.text + "\n")
