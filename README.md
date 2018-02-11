@@ -1,6 +1,9 @@
-#PodPod Communication
+# PodPod Communication
 
-##Info
+## Project Status
+Project is now deprecated.
+
+## Info
 This script is used to communicate with the BoilerMake Backend, and allows for ID barcodes to be scanned and then recorded on the API server. We used a Raspberry Pi to process the scanner input.
 
 ### Prerequisites and Installation
